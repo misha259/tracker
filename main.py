@@ -1,5 +1,6 @@
 import shelve
 import time
+import matplotlib.pyplot as plt
 data = shelve.open("data")
 
 
@@ -32,9 +33,21 @@ while inp != 'выйти':
         inp = input('Введите команду: ').lower()
         continue
     if inp[0] == 'баланс':
-        print(data)
+        print(balance())
         inp = input('Введите команду: ').lower()
         continue
+    if inp[0] =='график':
+        val=dict()
+        for key in data:
+            v=data[key]
+            if v[2] in val:
+                if v[0]=='+':
+                    val[v[2]]+=v[1]
+                elif v[0]=='-':
+                    val[v[2]] -= v[1]
+            else:
+                val[v[2]]=v[1]
+        plt.pie(val.values(),labels=val.keys())
     if inp[1].isdecimal():
         inp[1]=int(inp[1])
     else:
