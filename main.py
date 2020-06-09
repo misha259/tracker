@@ -28,14 +28,12 @@ inp=''
 inp=input('Введите команду: ').lower()
 while inp != 'выйти':
     inp=inp.split()
-    if len(inp)<2 and inp[0]!='баланс':
-        print("неполные данные")
-        inp = input('Введите команду: ').lower()
-        continue
+
     if inp[0] == 'баланс':
         print(balance())
         inp = input('Введите команду: ').lower()
         continue
+
     if inp[0] =='график':
         val=dict()
         for key in data:
@@ -48,11 +46,20 @@ while inp != 'выйти':
             else:
                 val[v[2]]=v[1]
         plt.pie(val.values(),labels=val.keys())
+        plt.show()
+        continue
+
+    if len(inp)<2:
+        print("неполные данные")
+        inp = input('Введите команду: ').lower()
+        continue
+
     if inp[1].isdecimal():
         inp[1]=int(inp[1])
     else:
         print('неверный формат ввода')
         continue
+
     if inp[0] == 'доход':
         if len(inp)>2:
             comm = inp[2:]
@@ -60,6 +67,7 @@ while inp != 'выйти':
             add_money(inp[1],comm)
         else:
             add_money(inp[1],'')
+
     if inp[0] == 'расход':
         if len(inp)>2:
             comm = inp[2:]
