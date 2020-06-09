@@ -11,9 +11,15 @@ def subtrack_money(count, comm):
     t = time.strftime('%d %m %y %H %M %S')
     data[t] = ['-', count, comm]
 
-#def balance:
-
-
+def balance():
+    res = 0
+    for i in data:
+        i_data = data[i]
+        if i_data[0] == '-':
+            res -= i_data[1]
+        elif i_data[0] == '+':
+            res += i_data[1]
+    return res
 
 
 #интерфейс
