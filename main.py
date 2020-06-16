@@ -22,6 +22,27 @@ def balance():
             res += i_data[1]
     return res
 
+def grafic():
+    add = dict()
+    sub = dict()
+    for key in data:
+        v = data[key]
+        if v[0] == '+':
+              if v[2] in add:
+                add[v[2]] += v[1]
+        else:
+            add[v[2]] = v[1]
+    for key in data:
+        v = data[key]
+        if v[0] == '-':
+            if v[2] in sub:
+                sub[v[2]] += v[1]
+        else:
+            sub[v[2]] = v[1]
+    fig, (ax1, ax2) = plt.subplots(1, 2)
+    ax1.pie(add.values(), labels=add.keys())
+    ax2.pie(sub.values(), labels=sub.keys())
+    plt.show()
 
 #интерфейс
 inp=''
@@ -35,18 +56,7 @@ while inp != 'выйти':
         continue
 
     if inp[0] =='график':
-        val=dict()
-        for key in data:
-            v=data[key]
-            if v[2] in val:
-                if v[0]=='+':
-                    val[v[2]]+=v[1]
-                elif v[0]=='-':
-                    val[v[2]] -= v[1]
-            else:
-                val[v[2]]=v[1]
-        plt.pie(val.values(),labels=val.keys())
-        plt.show()
+        grafic()
         continue
 
     if len(inp)<2:
