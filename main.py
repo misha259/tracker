@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 data = shelve.open("data")
 
 
+
 def add_money(count,comm):
     t=time.strftime('%d %m %y %H %M %S')
     data[t]=['+',count,comm]
@@ -22,23 +23,25 @@ def balance():
             res += i_data[1]
     return res
 
+
+
 def grafic():
     add = dict()
     sub = dict()
     for key in data:
         v = data[key]
         if v[0] == '+':
-              if v[2] in add:
+            if v[2] in add:
                 add[v[2]] += v[1]
-        else:
-            add[v[2]] = v[1]
+            else:
+                add[v[2]] = v[1]
     for key in data:
         v = data[key]
         if v[0] == '-':
             if v[2] in sub:
                 sub[v[2]] += v[1]
-        else:
-            sub[v[2]] = v[1]
+            else:
+                sub[v[2]] = v[1]
     fig, (ax1, ax2) = plt.subplots(1, 2)
     ax1.pie(add.values(), labels=add.keys())
     ax2.pie(sub.values(), labels=sub.keys())
@@ -46,13 +49,14 @@ def grafic():
 
 #интерфейс
 inp=''
-inp=input('Введите команду: ').lower()
-while inp != 'выйти':
-    inp=inp.split()
 
+while inp != 'выйти':
+    if __name__ != '__main__':
+        break
+    inp = input('Введите команду: ').lower()
+    inp=inp.split()
     if inp[0] == 'баланс':
         print(balance())
-        inp = input('Введите команду: ').lower()
         continue
 
     if inp[0] =='график':
@@ -61,7 +65,6 @@ while inp != 'выйти':
 
     if len(inp)<2:
         print("неполные данные")
-        inp = input('Введите команду: ').lower()
         continue
 
     if inp[1].isdecimal():
@@ -86,5 +89,5 @@ while inp != 'выйти':
         else:
             subtrack_money(inp[1],'')
 
-    inp = input('Введите команду: ').lower()
-data.close()
+if __name__ == '__main__':
+    data.close()
