@@ -4,14 +4,23 @@ import matplotlib.pyplot as plt
 data = shelve.open("data")
 
 
+def save():
+    global data
+    data.close()
+    data = shelve.open("data")
 
-def add_money(count,comm):
-    t=time.strftime('%d %m %y %H %M %S')
-    data[t]=['+',count,comm]
+
+def add_money(count, comm):
+    t = time.strftime('%d %m %y %H %M %S')
+    data[t] = ['+', count, comm]
+    save()
+
 
 def subtrack_money(count, comm):
     t = time.strftime('%d %m %y %H %M %S')
     data[t] = ['-', count, comm]
+    save()
+
 
 def balance():
     res = 0
@@ -24,8 +33,7 @@ def balance():
     return res
 
 
-
-def grafic():
+def grafic(*args):
     add = dict()
     sub = dict()
     for key in data:
@@ -47,14 +55,15 @@ def grafic():
     ax2.pie(sub.values(), labels=sub.keys())
     plt.show()
 
-#интерфейс
-inp=''
 
+#интерфейс
+inp = ''
 while inp != 'выйти':
     if __name__ != '__main__':
         break
-    inp = input('Введите команду: ').lower()
+    inp=input('Введите команду: ').lower()
     inp=inp.split()
+
     if inp[0] == 'баланс':
         print(balance())
         continue
@@ -88,6 +97,7 @@ while inp != 'выйти':
             subtrack_money(inp[1],comm)
         else:
             subtrack_money(inp[1],'')
+
 
 if __name__ == '__main__':
     data.close()
