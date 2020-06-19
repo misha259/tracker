@@ -7,6 +7,7 @@ okno.title("Финансовый калькулятор")
 
 summ='Введите сумму'
 komm='По желанию, оставьте комментарий'
+lbl=Label(okno, text='Ваш баланс:')
 bRashod=Button(okno, text='расход')
 bDohod=Button(okno, text='доход')
 bGrafic=Button(okno, text='график')
@@ -14,7 +15,7 @@ lBalans=Label(okno, textvariable=main.balance(), font=("Tahoma", 50))
 eSumma=Entry(okno,textvariable=summ)
 eKomm=Entry(okno,textvariable=komm)
 
-#добавить надпись ваш баланс
+lbl.place(x=60,y=5,width=100,height=27)
 lBalans.place(y=37,x=20,width=260, height=80)
 eSumma.place(y=167,x=20,width=260, height=50)
 eKomm.place(x=20,y=257,width=260, height=80)
