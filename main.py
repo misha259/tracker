@@ -3,14 +3,23 @@ import time
 import matplotlib.pyplot as plt
 data = shelve.open("data")
 
-
+def historyReturn():
+    keys=list(data.keys())
+    result=[]
+    if len(data)<5:
+        return []
+    for _ in range(5):
+        key = max(keys)
+        keys.remove(key)
+        result.append([key, data[key][0], data[key][1], data[key][2]])
+    return result
 
 def add_money(count,comm):
-    t=time.strftime('%d %m %y %H %M %S')
+    t=time.strftime('%d.%m.%y %H:%M:%S')
     data[t]=['+',count,comm]
 
 def subtrack_money(count, comm):
-    t = time.strftime('%d %m %y %H %M %S')
+    t = time.strftime('%d.%m.%y %H:%M:%S')
     data[t] = ['-', count, comm]
 
 def balance():
@@ -23,9 +32,7 @@ def balance():
             res += i_data[1]
     return res
 
-
-
-def grafic():
+def grafic(*args):
     add = dict()
     sub = dict()
     for key in data:
